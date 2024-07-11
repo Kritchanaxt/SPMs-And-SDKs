@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct ImageLoader: View {
+    
+    let url: String
+    var contentMode: ContentMode = .fill
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Rectangle()
+            .opacity(0)
+            .overlay(
+//                SDWebImageLoader(url: url, contentMode: contentMode)
+                KingfisherImageLoader(url: url, contentMode: contentMode)
+                //.allowsHitTesting(false)
+            )
+            .clipped()
     }
 }
 
 #Preview {
-    ImageLoader()
+    ImageLoader(
+        url: "https://picsum.photos/id/237/200/300",
+        contentMode: .fill
+    )
 }

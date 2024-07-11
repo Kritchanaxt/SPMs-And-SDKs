@@ -6,13 +6,31 @@
 //
 
 import SwiftUI
+import Lottie
 
-struct Lottie: View {
+// .json <- OLD
+// .dotLottie <- NEW
+
+struct LottieHelperView: View {
+    
+    var fileName: String = "StarAnimation.json"
+    var contentMode: UIView.ContentMode = .scaleAspectFill
+    var playLoopMode: LottieLoopMode = .playOnce
+    var onAnimationDidFinish: (() -> Void)? = nil
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        LottieView(animation: .named(fileName))
+            .configure({ lottieAnimationView in
+                lottieAnimationView.contentMode = contentMode
+//                lottieAnimationView.shouldRasterizeWhenIdle = true
+            })
+            .playbackMode(.playing(.toProgress(1, loopMode: playLoopMode)))
+            .animationDidFinish { completed in
+                onAnimationDidFinish?()
+            }
     }
 }
 
 #Preview {
-    Lottie()
+    LottieHelperView()
 }
